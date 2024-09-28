@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des Auteurs</title>
+    <link rel="stylesheet" href="/path/to/your/styles.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 1rem;
+            min-width: 400px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        table thead tr {
+            background-color: #007bff;
+            color: white;
+            text-align: left;
+        }
+
+        table th,
+        table td {
+            padding: 12px 15px;
+        }
+
+        table tbody tr {
+            border-bottom: 1px solid #dddddd;
+        }
+
+        table tbody tr:nth-of-type(even) {
+            background-color: #f3f3f3;
+        }
+
+        table tbody tr:last-of-type {
+            border-bottom: 2px solid #007bff;
+        }
+
+        table tbody tr:hover {
+            background-color: #e1f5fe;
+        }
+
+        img {
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        p {
+            font-size: 1.2rem;
+            color: #6c757d;
+        }
+
+        .summary {
+            margin-top: 20px;
+        }
+
+        .details-link {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .details-link:hover {
+            color: #0056b3;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 50px;
+        }
+
+        .btn-custom-container {
+            background-color: white;
+            color: #007bff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-custom-container:hover {
+            background-color: #C0E8D5;
+            color: red;
+        }
+
+        .btn-custom-container form {
+            margin: 0;
+        }
+
+        .btn-text {
+            font-size: 1.5rem;
+            color: #007bff;
+            text-decoration: none;
+            border: none;
+            background: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Liste des Auteurs</h1>
+    </header>
+    <main>
+        {% set tot_livr = 0 %}
+        {% if authors is empty %}
+        <h1>Aucun auteur n'est disponible.</h1>
+        {% else %}
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Photo</th>
+                    <th>Nom d'utilisateur</th>
+                    <th>Email</th>
+                    <th>Nombre de livres</th>
+                    <th>Détails</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for author in authors %}
+                <tr>
+                    <td>{{ author.id }}</td>
+                    <td><img src="{{ asset(author.picture) }}" alt="{{ author.username }}" width="120" height="100"></td>
+                    <td>{{ author.username | upper }}</td>
+                    <td>{{ author.email }}</td>
+                    <td>{{ author.nb_books }}</td>
+                    <td><a href="{{ path('show_author', { id: author.id }) }}" class="details-link">Détails</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+
+        <div class="summary">
+            <p>Le nombre d'auteurs est : {{ authors|length }}</p>
+
+            {% for author in authors %}
+            {% set tot_livr = tot_livr + author.nb_books %}
+            {% endfor %}
+
+            <p>Le nombre total de livres est : {{ tot_livr }}</p>
+        </div>
+
+        <div class="button-container">
+    <div class="btn-custom-container">
+        <form action="{{ path('hello_world') }}" method="GET">
+            <button type="submit" class="btn-text">Home</button>
+        </form>
+    </div>
+</div>
+
+    </main>
+</body>
+
+</html>

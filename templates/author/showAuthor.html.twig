@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Détails de l'Auteur</title>
+</head>
+<body>
+    <header>
+        <h1>Détails de l'Auteur</h1>
+    </header>
+    <main>
+        <h2>{{ author.username }}</h2>
+        <img src="{{ asset(author.picture) }}" alt="{{ author.username }}" width="150">
+        <p>Email : {{ author.email }}</p>
+        <p>Nombre de livres : {{ author.nb_books }}</p>
+
+        <a href="{{ path('list_authors') }}">Retour à la liste</a>
+    </main>
+</body>
+</html>

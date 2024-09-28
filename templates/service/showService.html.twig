@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Service Page</title>
+</head>
+<body>
+    <h1>Service: {{ name }}</h1>
+   
+
+    <form action="{{ path('goToService') }}" method="POST">
+            <button type="submit">Service Contorller</button>
+        </form>
+
+
+   <form action="{{ path('goToIndex') }}" method="POST">
+            <button type="submit">Home Contorller</button>
+        </form>
+
+        
+</body>
+</html>
