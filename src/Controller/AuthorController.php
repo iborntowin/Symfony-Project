@@ -36,8 +36,8 @@ class AuthorController extends AbstractController
         ];
     }
 
-    #[Route('/author/{id}', name: 'show_author')]
-    public function showAuthor(int $id): Response
+    #[Route('/author/{id}', name: 'authorDetails ')]
+    public function authorDetails (int $id): Response
     {
         $author = null;
         foreach ($this->authors as $a) {
