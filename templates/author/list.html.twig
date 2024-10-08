@@ -14,6 +14,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
+            margin: 0; /* Added margin reset */
         }
 
         h1 {
@@ -127,9 +128,6 @@
     </header>
     <main>
         {% set tot_livr = 0 %}
-        {% if authors is empty %}
-        <h1>Aucun auteur n'est disponible.</h1>
-        {% else %}
         <table>
             <thead>
                 <tr>
@@ -148,32 +146,16 @@
                     <td><img src="{{ asset(author.picture) }}" alt="{{ author.username }}" width="120" height="100"></td>
                     <td>{{ author.username | upper }}</td>
                     <td>{{ author.email }}</td>
-                    <td>{{ author.nb_books }}</td>
-                    <td><a href="{{ path('show_author', { id: author.id }) }}" class="details-link">Détails</a></td>
+                    <td>{{ author.nbBooks }}</td> <!-- Assuming you have a getter for this property -->
+                    <td><a href="{{ path('authorDetails', { id: author.id }) }}" class="details-link">Détails</a></td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
-        {% endif %}
 
         <div class="summary">
             <p>Le nombre d'auteurs est : {{ authors|length }}</p>
-
-            {% for author in authors %}
-            {% set tot_livr = tot_livr + author.nb_books %}
-            {% endfor %}
-
-            <p>Le nombre total de livres est : {{ tot_livr }}</p>
         </div>
-
-        <div class="button-container">
-    <div class="btn-custom-container">
-        <form action="{{ path('hello_world') }}" method="GET">
-            <button type="submit" class="btn-text">Home</button>
-        </form>
-    </div>
-</div>
-
     </main>
 </body>
 
