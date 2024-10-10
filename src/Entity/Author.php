@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\AuthorRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: AuthorRepository::class)]
@@ -24,6 +26,21 @@ class Author
 
     #[ORM\Column]
     private ?int $nb_books = null;
+
+    // Defining the livres collection for the OneToMany relationship
+    #[ORM\OneToMany(mappedBy: 'author', targetEntity: Livre::class)]
+    private Collection $livres;
+
+    public function __construct()
+    {
+        $this->livres = new ArrayCollection();
+    }
+
+    // Getter for the livres collection
+    public function getLivres(): Collection
+    {
+        return $this->livres;
+    }
 
     public function getId(): ?int
     {
@@ -66,12 +83,12 @@ class Author
         return $this;
     }
 
-    public function getNbBooks(): ?int // Getter method for nb_books
+    public function getNbBooks(): ?int
     {
         return $this->nb_books;
     }
 
-    public function setNbBooks(int $nb_books): static // Setter method for nb_books
+    public function setNbBooks(int $nb_books): static
     {
         $this->nb_books = $nb_books;
 

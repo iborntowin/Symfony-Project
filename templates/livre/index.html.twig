@@ -1,11 +1,8 @@
-<!DOCTYPE html>
-<html lang="fr">
+{% extends 'base.html.twig' %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Liste des Auteurs</title>
-    <link rel="stylesheet" href="/path/to/your/styles.css">
+{% block title %}Liste des Livres{% endblock %}
+
+{% block body %}
     <style>
         body {
             background-color: #f8f9fa;
@@ -18,14 +15,23 @@
             padding: 20px;
         }
 
+        .container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
         h1 {
             font-size: 2.5rem;
             color: #007bff;
-            margin-bottom: 20px;
         }
 
         table {
-            width: 80%;
+            width: 100%;
             border-collapse: collapse;
             margin: 20px 0;
             font-size: 1rem;
@@ -63,26 +69,6 @@
         img {
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        p {
-            font-size: 1.2rem;
-            color: #6c757d;
-        }
-
-        .summary {
-            margin-top: 20px;
-        }
-
-        .details-link {
-            color: #007bff;
-            text-decoration: none;
-            font-weight: bold;
-            transition: color 0.3s ease;
-        }
-
-        .details-link:hover {
-            color: #0056b3;
         }
 
         .button-container {
@@ -134,58 +120,57 @@
             cursor: pointer;
         }
     </style>
-</head>
 
-<body>
-    <header>
-        <h1>Liste des Auteurs</h1>
-    </header>
-    <main>
+    <div class="container">
+        <h1>Liste des Livres</h1>
+
+        <div class="button-container">
+            <a href="{{ path('app_livre_new') }}" class="btn-custom-container">
+                <span class="btn-text">Ajouter un Nouveau Livre</span>
+            </a>
+        </div>
+
         <table>
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Photo</th>
-                    <th>Nom d'utilisateur</th>
-                    <th>Email</th>
-                    <th>Nombre de livres</th>
-                    <th>Détails</th>
+                    <th>Image</th>
+                    <th>Titre</th>
+                    <th>Auteur</th>
+                    <th>Nombre de Pages</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-                {% for author in authors %}
-                <tr>
-                    <td>{{ author.id }}</td>
-                    <td>
-                        <img src="{{ asset(author.picture) }}" alt="{{ author.username }}" width="120" height="100">
-                    </td>
-                    <td>{{ author.username | upper }}</td>
-                    <td>{{ author.email }}</td>
-                    <td>{{ author.nbBooks }}</td>
-                    <td>
-                        <a href="{{ path('authorDetails', { id: author.id }) }}" class="details-link">Détails</a>
-                    </td>
-                    <td>
-                        <form method="post" action="{{ path('author_delete', {'id': author.id}) }}">
-                            <input type="hidden" name="_csrf_token" value="{{ csrf_token('delete' ~ author.id) }}">
-                            <button type="submit" class="delete-button">Supprimer</button>
-                        </form>
-                    </td>
-                </tr>
+                {% for livre in livres %}
+                    <tr>
+                        <td>{{ livre.ref }}</td>
+                        <td>
+                            {% if livre.picture %}
+                                <img src="{{ asset('assets/images/Livers/' ~ livre.picture) }}" alt="{{ livre.title }}" width="120" height="100">
+                            {% else %}
+                                Pas d'image
+                            {% endif %}
+                        </td>
+                        <td>{{ livre.title }}</td>
+                        <td>{{ livre.author.username }}</td>
+                        <td>{{ livre.nbrPage }}</td>
+                        <td>
+    <a href="{{ path('app_livre_show', {'id': livre.ref}) }}" class="details-link">Voir</a>
+    <a href="{{ path('app_livre_edit', {'id': livre.ref}) }}" class="details-link">Modifier</a>
+    <form method="post" action="{{ path('app_livre_delete', {'ref': livre.ref}) }}" style="display:inline;">
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('delete' ~ livre.ref) }}">
+        <button type="submit" class="delete-button">Supprimer</button>
+    </form>
+</td>
+
                 {% endfor %}
             </tbody>
         </table>
 
         <div class="summary">
-            <p>Le nombre d'auteurs est : {{ authors|length }}</p>
+            <p>Le nombre de livres est : {{ livres|length }}</p>
         </div>
-        <div class="button-container">
-            <a href="{{ path('author_add') }}" class="btn-custom-container">
-                <span class="btn-text">Ajouter un Auteur</span>
-            </a>
-        </div>
-    </main>
-</body>
-
-</html>
+    </div>
+{% endblock %}
+                            

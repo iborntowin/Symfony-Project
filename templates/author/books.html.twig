@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Livres de l'Auteur</title>
+    <link rel="stylesheet" href="/path/to/your/styles.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        h1, h2, h3 {
+            color: #007bff;
+        }
+
+        .form-container {
+            margin-bottom: 20px;
+        }
+
+        .book-list {
+            margin-top: 20px;
+            width: 80%;
+            background: white;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .delete-button {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .delete-button:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Livres de l'Auteur</h1>
+    </header>
+    <main>
+        <div class="form-container">
+            <h2>Ajouter un Livre</h2>
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            {{ form_end(form) }}
+        </div>
+        <div class="book-list">
+            <h3>Liste des Livres</h3>
+            <ul>
+                {% for book in author.livres %}
+                    <li>
+                        {{ book.title }} - {{ book.description }}
+                        <form method="post" action="{{ path('book_delete', { id: book.id }) }}" style="display:inline;">
+                            <input type="hidden" name="_csrf_token" value="{{ csrf_token('delete' ~ book.id) }}">
+                            <button type="submit" class="delete-button">Supprimer</button>
+                        </form>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </main>
+</body>
+</html>

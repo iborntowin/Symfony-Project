@@ -1,0 +1,11 @@
+{# livre/_form.html.twig #}
+
+{{ form_start(form) }}
+    {{ form_row(form.ref) }}
+    {{ form_row(form.title) }}
+    {{ form_row(form.author) }} {# Make sure this is present #}
+    {{ form_row(form.nbrPage) }}
+    {{ form_row(form.picture) }}
+
+    <button class="btn">Save</button>
+{{ form_end(form) }}

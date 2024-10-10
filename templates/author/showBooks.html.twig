@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Livres de {{ author.username }}</title>
+</head>
+<body>
+    <h1>Livres de {{ author.username }}</h1>
+    <ul>
+        {% for livre in livres %}
+            <li>
+                <h3>{{ livre.title }}</h3>
+                <p>Nombre de pages: {{ livre.nbrPage }}</p>
+                <img src="{{ asset(livre.picture) }}" alt="{{ livre.title }}" width="100">
+            </li>
+        {% else %}
+            <p>Aucun livre trouvé pour cet auteur.</p>
+        {% endfor %}
+    </ul>
+    <a href="{{ path('list_authors') }}">Retour à la liste des auteurs</a>
+</body>
+</html>

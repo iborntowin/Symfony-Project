@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Book Details{% endblock %}
+
+{% block body %}
+    <h1>{{ livre.title }}</h1>
+
+    {% if livre.picture %}
+        <img src="{{ asset('assets/images/Livers/' ~ livre.picture) }}" alt="{{ livre.title }}" />
+    {% else %}
+        <p>No image available.</p>
+    {% endif %}
+
+    <p><strong>Reference:</strong> {{ livre.ref }}</p>
+    <p><strong>Author:</strong> {{ livre.author.username }}</p>
+    <p><strong>Number of Pages:</strong> {{ livre.nbrPage }}</p>
+
+    <a href="{{ path('app_livre_index') }}">Back to the list</a>
+{% endblock %}
