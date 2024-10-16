@@ -26,7 +26,7 @@ This Symfony web application is developed as part of the Web 2.0 class, focusing
 
 Here’s a glimpse of the application:
 
-![Main Page Screenshot](public/assets/images/1.png)
+![Main Page Screenshot](assets/images/1.png)
 
 _Screenshot showing the main page of the application._
 
