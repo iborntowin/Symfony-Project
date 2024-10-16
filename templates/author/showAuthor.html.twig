@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Détails de l'Auteur</title>
+    <link rel="stylesheet" href="/path/to/your/styles.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        h1, h2 {
+            color: #007bff;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        img {
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1.2rem;
+            color: #6c757d;
+            margin: 10px 0;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: #0056b3;
+        }
+
+        .button-container {
+            margin-top: 30px;
+        }
+
+        .btn-custom-container {
+            background-color: white;
+            color: #007bff;
+            padding: 10px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-custom-container:hover {
+            background-color: #C0E8D5;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Détails de l'Auteur</h1>
+    </header>
+    <main>
+        <h2>{{ author.username }}</h2>
+        <img src="{{ asset('assets/images/authors/' ~ author.picture) }}" alt="{{ author.username }}" width="180">
+        <p>Email : {{ author.email }}</p>
+        <p>Nombre de livres : {{ author.nbBooks }}</p> 
+
+        <div class="button-container">
+            <div class="btn-custom-container">
+                <a href="{{ path('list_authors') }}">Retour à la liste</a>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

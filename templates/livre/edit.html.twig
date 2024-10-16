@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier {{ livre.title }}{% endblock %}
+
+{% block body %}
+    <style>
+        body {
+            background-color: #f0f4f8; /* Soft light background */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            background-color: #ffffff; /* White container */
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #2c3e50; /* Darker color for the heading */
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .button-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .btn-custom-container {
+            background-color: white; 
+            color: #007bff;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            display: inline-block;
+            width: 20%;
+        }
+
+        .btn-custom-container:hover {
+            background-color: #C0E8D5; 
+        }
+
+        .btn-text {
+            font-size: 1rem;
+            color: #007bff;
+            text-decoration: none;
+            border: none;
+            background: none;
+            cursor: pointer;
+            width: 100%;
+        }
+    </style>
+
+    <div class="container">
+        <h1>Modifier {{ livre.title }}</h1>
+
+        {{ include('livre/_form.html.twig', { form: form, button_label: 'Modifier' }) }}
+
+        <div class="button-container">
+            <a href="{{ path('app_livre_index') }}" class="btn-custom-container">
+                <span class="btn-text">Retour à la Liste</span>
+            </a>
+        </div>
+    </div>
+{% endblock %}

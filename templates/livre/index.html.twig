@@ -1,0 +1,194 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Livres{% endblock %}
+
+{% block body %}
+    <style>
+        body {
+            background-color: #f0f4f8;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 1200px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        table thead tr {
+            background-color: #2980b9;
+            color: #ffffff;
+            text-align: left;
+        }
+
+        table th,
+        table td {
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        table tbody tr:hover {
+            background-color: #f1f9ff;
+        }
+
+        img {
+            border-radius: 8px;
+            max-width: 100px;
+            height: auto;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 50px;
+        }
+
+        .btn-custom-container {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-custom-container:hover {
+            background-color: #0056b3;
+        }
+
+        .delete-button {
+            background-color: transparent;
+            color: #dc3545;
+            border: 1px solid #dc3545;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .delete-button:hover {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .details-link {
+            margin-right: 10px;
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .details-link:hover {
+            color: #0056b3;
+        }
+
+        .summary {
+            margin-top: 20px;
+            font-size: 1rem;
+            color: #333;
+        }
+
+       .home-button {
+    display: inline-block;
+    background-color: white;
+    color: #007bff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-decoration: none;
+    font-size: 1.5rem;
+    text-align: center;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.home-button:hover {
+    background-color: #C0E8D5;
+    color: red;
+}
+
+    </style>
+    
+    <div class="container">
+        <h1>Liste des Livres</h1>
+
+       
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Image</th>
+                    <th>Titre</th>
+                    <th>Auteur</th>
+                    <th>Nombre de Pages</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for livre in livres %}
+                    <tr>
+                        <td>{{ livre.ref }}</td>
+                        <td>
+                            {% if livre.picture %}
+                                <img src="{{ asset('assets/images/Livers/' ~ livre.picture) }}" alt="{{ livre.title }}" width="120" height="100">
+                            {% else %}
+                                Pas d'image
+                            {% endif %}
+                        </td>
+                        <td>{{ livre.title }}</td>
+                        <td>{{ livre.author.username }}</td>
+                        <td>{{ livre.nbrPage }}</td>
+                        <td>
+                            <a href="{{ path('app_livre_show', {'ref': livre.ref}) }}" class="details-link">Voir</a>
+                            <a href="{{ path('app_livre_edit', {'ref': livre.ref}) }}" class="details-link">Modifier</a>
+                            <form method="post" action="{{ path('app_livre_delete', {'ref': livre.ref}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet article ?');" style="display:inline;">
+                                <input type="hidden" name="_csrf_token" value="{{ csrf_token('delete' ~ livre.ref) }}">
+                                <button type="submit" class="delete-button">Supprimer</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+         <div class="button-container">
+            <a href="{{ path('app_livre_new') }}" class="btn-custom-container">
+                <span class="btn-text">Ajouter un Nouveau Livre</span>
+            </a>
+        </div>
+
+        <div class="button-container">
+    <a href="{{ path('hello_world') }}" class="home-button">Retour à la Page d'Accueil</a>
+</div>
+
+
+        <div class="summary">
+            <p>Le nombre de livres est : {{ livres|length }}</p>
+        </div>
+    </div>
+{% endblock %}

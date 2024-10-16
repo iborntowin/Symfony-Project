@@ -1,0 +1,13 @@
+{# livre/_form.html.twig #}
+
+{{ form_start(form) }}
+    {{ form_row(form.ref) }}
+    {{ form_row(form.title) }}
+    {{ form_row(form.author) }} 
+    {{ form_row(form.nbrPage) }}
+    {{ form_row(form.picture) }}
+
+    <div class="button-container" style="margin-top: 20px;"> {# Added margin for spacing #}
+        <button type="submit" class="btn-text" style="border: 2px solid #007bff; padding: 8px 16px; width: auto;">Save</button> {# Adjusted padding and width #}
+    </div>
+{{ form_end(form) }}

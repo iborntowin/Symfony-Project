@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des Auteurs</title>
+    <link rel="stylesheet" href="/path/to/your/styles.css">
+    <style>
+        body {
+            background-color: #f0f4f8;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 1rem;
+        }
+
+        table thead {
+            background-color: #2980b9;
+            color: white;
+        }
+
+        table th,
+        table td {
+            padding: 15px;
+            text-align: left;
+        }
+
+        table tbody tr {
+            border-bottom: 1px solid #dddddd;
+        }
+
+        table tbody tr:nth-of-type(even) {
+            background-color: #ecf0f1;
+        }
+
+        table tbody tr:hover {
+            background-color: #bdc3c7;
+        }
+
+        img {
+            border-radius: 5px;
+            max-width: 80px;
+            height: auto;
+        }
+
+        .button-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .btn-custom-container {
+            display: inline-block;
+            background-color: white;
+            color: #007bff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            margin: 0 10px;
+            width: 200px;
+        }
+
+        .btn-custom-container:hover {
+            background-color: #C0E8D5;
+            color: red;
+        }
+
+        .btn-text {
+            font-size: 1.2rem;
+            color: #007bff;
+            text-decoration: none;
+            border: none;
+            background: none;
+            cursor: pointer;
+            display: block;
+            width: 100%;
+        }
+
+        .delete-button {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .delete-button:hover {
+            background-color: #c0392b;
+        }
+
+        .summary {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 1.1rem;
+            color: #555;
+        }
+
+        .home-button {
+            display: inline-block;
+            background-color: white;
+            color: #007bff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-decoration: none;
+            font-size: 1.2rem;
+            text-align: center;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .home-button:hover {
+            background-color: #C0E8D5;
+            color: red;
+        }
+
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Liste des Auteurs</h1>
+    </header>
+    <main>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Photo</th>
+                    <th>Nom d'utilisateur</th>
+                    <th>Email</th>
+                    <th>Nombre de livres</th>
+                    <th>Détails</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for author in authors %}
+                <tr>
+                    <td>{{ author.id }}</td>
+                    <td>
+                        <img src="{{ asset('assets/images/authors/' ~ author.picture) }}" alt="{{ author.username }}" width="120" height="100">
+                    </td>
+                    <td>{{ author.username | upper }}</td>
+                    <td>{{ author.email }}</td>
+                    <td>{{ author.nbBooks }}</td>
+                    <td>
+                        <a href="{{ path('authorDetails', { id: author.id }) }}" class="details-link">Détails</a>
+                    </td>
+                    <td>
+                        <form method="post" action="{{ path('author_delete', {'id': author.id}) }}">
+                            <input type="hidden" name="_csrf_token" value="{{ csrf_token('delete' ~ author.id) }}">
+                            <button type="submit" class="delete-button">Supprimer</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="summary">
+            <p>Le nombre d'auteurs est : {{ authors|length }}</p>
+        </div>
+        <div class="button-container">
+            <a href="{{ path('author_add') }}" class="btn-custom-container">
+                <span class="btn-text">Ajouter un Auteur</span>
+            </a>
+            <a href="{{ path('hello_world') }}" class="home-button">Retour à la Page d'Accueil</a>
+        </div>
+    </main>
+</body>
+
+</html>

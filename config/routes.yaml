@@ -1,0 +1,12 @@
+controllers:
+    resource:
+        path: ../src/Controller/
+        namespace: App\Controller
+    type: attribute
+author_books:
+    path: /author/{id}/books
+    controller: App\Controller\AuthorController::books
+app_livre_delete:
+    path: /livres/{ref}
+    controller: App\Controller\LivreController::delete
+    methods: [POST]

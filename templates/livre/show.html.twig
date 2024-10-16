@@ -1,0 +1,91 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Book Details{% endblock %}
+
+{% block body %}
+    <style>
+        body {
+            background-color: #f0f4f8; /* Soft light background */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            background-color: #ffffff; /* White container */
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #2c3e50; /* Darker color for the heading */
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        img {
+            border-radius: 5px;
+            max-width: 150px; /* Size for the book image */
+            height: auto;
+            display: block;
+            margin: 0 auto; /* Center the image */
+        }
+
+        .button-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .btn-custom-container {
+            background-color: white; 
+            color: #007bff;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            display: inline-block;
+            width: 20%;
+        }
+
+        .btn-custom-container:hover {
+            background-color: #C0E8D5; 
+        }
+
+        .btn-text {
+            font-size: 1rem;
+            color: #007bff;
+            text-decoration: none;
+            border: none;
+            background: none;
+            cursor: pointer;
+            width: 100%;
+        }
+    </style>
+
+    <div class="container">
+        <h1>{{ livre.title }}</h1>
+
+        {% if livre.picture %}
+            <img src="{{ asset('assets/images/Livers/' ~ livre.picture) }}" alt="{{ livre.title }}" />
+        {% else %}
+            <p>No image available.</p>
+        {% endif %}
+
+        <p><strong>Reference:</strong> {{ livre.ref }}</p>
+        <p><strong>Author:</strong> {{ livre.author.username }}</p>
+        <p><strong>Number of Pages:</strong> {{ livre.nbrPage }}</p>
+
+        <div class="button-container">
+            <a href="{{ path('app_livre_index') }}" class="btn-custom-container">
+                <span class="btn-text">Back to the list</span>
+            </a>
+        </div>
+    </div>
+{% endblock %}

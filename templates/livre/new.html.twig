@@ -1,0 +1,130 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un Nouveau Livre{% endblock %}
+
+{% block body %}
+    <style>
+        body {
+            background-color: #f8f9fa; /* Soft light background */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: auto;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 2.5rem; /* Same font size as before */
+            color: #007bff; /* Soft blue color for the heading */
+            margin-bottom: 20px;
+        }
+
+        .form-container {
+            background-color: white; /* White container */
+            padding: 20px; /* Padding */
+            border-radius: 10px; /* Rounded corners */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px; /* Match previous width */
+            text-align: center;
+        }
+
+        .btn-custom-container {
+            background-color: white; 
+            color: #007bff; 
+            padding: 15px; /* Adjust padding for buttons */
+            border-radius: 10px; /* Rounded corners for button container */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .btn-custom-container:hover {
+            background-color: #C0E8D5; /* Light background on hover */
+            color: red; /* Change text color on hover */
+        }
+
+        .btn-text {
+            font-size: 1rem;
+            color: #007bff;
+            text-decoration: none;
+            border: none;
+            background: none;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 1rem;
+            color: #6c757d;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+    </style>
+
+    <header>
+        <h1>Ajouter un Nouveau Livre</h1>
+    </header>
+    <main>
+        <div class="form-container">
+            {{ form_start(form, {'attr': {'enctype': 'multipart/form-data'}}) }}
+
+            <div class="form-group">
+                {{ form_label(form.ref, 'Référence') }}  
+                {{ form_widget(form.ref) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_label(form.title) }}
+                {{ form_widget(form.title) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_label(form.author) }}
+                {{ form_widget(form.author) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_label(form.nbrPage, 'Nombre de pages') }}
+                {{ form_widget(form.nbrPage) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_label(form.picture, 'Image du livre') }}
+                {{ form_widget(form.picture) }}
+            </div>
+
+            <div class="btn-custom-container">
+                <button type="submit" class="btn-text">Ajouter</button>
+            </div>
+
+            {{ form_end(form) }}
+        </div>
+    </main>
+{% endblock %}
