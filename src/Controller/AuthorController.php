@@ -16,8 +16,8 @@ use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
 
 class AuthorController extends AbstractController
 {
-    private AuthorRepository $authorRepository;
-    private EntityManagerInterface $entityManager;
+    private  $authorRepository;
+    private  $entityManager;
 
     public function __construct(AuthorRepository $authorRepository, EntityManagerInterface $entityManager)
     {
@@ -65,12 +65,21 @@ public function deleteAuthor(Request $request, int $id): Response
 
     
     #[Route('/listauthors', name: 'list_authors')]
-    public function listAuthors(): Response
+    public function listAuthors(Request $request): Response
     {
-        $authors = $this->authorRepository->findAll();
+        $email=$request->get('search');
+        if($email){
+        $authors=$this->authorRepository->search($email); 
+        }
+        else
+        {
+            $authors = $this->authorRepository->findAll();
+        
+        }
         return $this->render('author/list.html.twig', [
             'authors' => $authors,
         ]);
+        
     }
 
     #[Route('/author/add', name: 'author_add', methods: ['GET', 'POST'])]
@@ -129,7 +138,7 @@ public function goToAuthors(): Response
         $form = $this->createForm(AuthorType::class, $author);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->entityManager->flush(); // Use flush to update
+            $this->entityManager->flush();
             return $this->redirectToRoute('list_authors');
         }
 
@@ -155,6 +164,7 @@ public function goToAuthors(): Response
             'livres' => $livres,
         ]);
     }
+
 
     
 }

@@ -32,13 +32,30 @@ public function goToLivre(): Response
 }
 
 
-    #[Route(name: 'app_livre_index', methods: ['GET'])]
-    public function index(LivreRepository $livreRepository): Response
-    {
-        return $this->render('livre/index.html.twig', [
-            'livres' => $livreRepository->findAll(),
-        ]);
+
+
+#[Route(name: 'app_livre_index', methods: ['GET', 'POST'])]
+public function index(Request $request, LivreRepository $livreRepository): Response
+{
+    $searchTerm = $request->query->get('search', '');
+
+    if ($searchTerm) {
+        $livre = $livreRepository->searchBookByRef($searchTerm);
+
+        if ($livre) {
+            $livres = [$livre];
+        } else {
+            $livres = $livreRepository->findByTitleOrAuthor($searchTerm);
+        }
+    } else {
+        $livres = $livreRepository->findAll();
     }
+
+    return $this->render('livre/index.html.twig', [
+        'livres' => $livres,
+        'searchTerm' => $searchTerm,
+    ]);
+}
 
     #[Route('/new', name: 'app_livre_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
@@ -127,4 +144,9 @@ public function goToLivre(): Response
     
         return $this->redirectToRoute('app_livre_index', [], Response::HTTP_SEE_OTHER);
     }
+
+
+
+
+    
 }

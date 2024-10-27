@@ -149,12 +149,19 @@
 <body>
     <header>
         <h1>Liste des Auteurs</h1>
+
+
     </header>
     <main>
+
+   <form method="get" action="{{ path('list_authors') }}">
+                            <input  type="text"  name="search" value="{{('search')}}"  placeholder= "recherche par email" >
+                            <button type="submit">Recherche</button>
+                        </form>
         <table>
             <thead>
                 <tr>
-                    <th>ID</th>
+                    
                     <th>Photo</th>
                     <th>Nom d'utilisateur</th>
                     <th>Email</th>
@@ -166,7 +173,7 @@
             <tbody>
                 {% for author in authors %}
                 <tr>
-                    <td>{{ author.id }}</td>
+                   
                     <td>
                         <img src="{{ asset('assets/images/authors/' ~ author.picture) }}" alt="{{ author.username }}" width="120" height="100">
                     </td>

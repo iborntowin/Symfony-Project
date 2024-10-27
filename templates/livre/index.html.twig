@@ -29,6 +29,41 @@
             margin-bottom: 20px;
         }
 
+        .search-form {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .search-input {
+            width: 70%;
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px 0 0 5px;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .search-input:focus {
+            border-color: #2980b9;
+        }
+
+        .search-button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            background-color: #2980b9;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 0 5px 5px 0;
+            transition: background-color 0.3s ease;
+        }
+
+        .search-button:hover {
+            background-color: #0056b3;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
@@ -113,35 +148,37 @@
             color: #333;
         }
 
-       .home-button {
-    display: inline-block;
-    background-color: white;
-    color: #007bff;
-    padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    text-decoration: none;
-    font-size: 1.5rem;
-    text-align: center;
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
+        .home-button {
+            display: inline-block;
+            background-color: white;
+            color: #007bff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-decoration: none;
+            font-size: 1.5rem;
+            text-align: center;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
 
-.home-button:hover {
-    background-color: #C0E8D5;
-    color: red;
-}
+        .home-button:hover {
+            background-color: #C0E8D5;
+            color: red;
+        }
 
     </style>
     
     <div class="container">
         <h1>Liste des Livres</h1>
 
-       
+        <form method="get" action="{{ path('app_livre_index') }}" class="search-form">
+            <input type="text" name="search" value="{{ searchTerm }}" placeholder="Rechercher par titre ou auteur" class="search-input">
+            <button type="submit" class="search-button">Rechercher</button>
+        </form>
 
         <table>
             <thead>
                 <tr>
-                    <th>ID</th>
                     <th>Image</th>
                     <th>Titre</th>
                     <th>Auteur</th>
@@ -152,7 +189,6 @@
             <tbody>
                 {% for livre in livres %}
                     <tr>
-                        <td>{{ livre.ref }}</td>
                         <td>
                             {% if livre.picture %}
                                 <img src="{{ asset('assets/images/Livers/' ~ livre.picture) }}" alt="{{ livre.title }}" width="120" height="100">
@@ -176,16 +212,15 @@
             </tbody>
         </table>
 
-         <div class="button-container">
+        <div class="button-container">
             <a href="{{ path('app_livre_new') }}" class="btn-custom-container">
                 <span class="btn-text">Ajouter un Nouveau Livre</span>
             </a>
         </div>
 
         <div class="button-container">
-    <a href="{{ path('hello_world') }}" class="home-button">Retour à la Page d'Accueil</a>
-</div>
-
+            <a href="{{ path('hello_world') }}" class="home-button">Retour à la Page d'Accueil</a>
+        </div>
 
         <div class="summary">
             <p>Le nombre de livres est : {{ livres|length }}</p>

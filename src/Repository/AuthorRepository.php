@@ -38,5 +38,14 @@ class AuthorRepository extends ServiceEntityRepository
         }
     }
 
+    public function search($value ):array{
+
+        return $this->createQueryBuilder('a')
+        ->where('a.email LIKE :email')
+        ->setParameter('email','%'.$value.'%')
+        ->getQuery()
+        ->getResult();
+    }
+
     // Other custom query methods can be added here
 }
